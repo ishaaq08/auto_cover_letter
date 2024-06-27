@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js" defer></script>
+    <<script src="https://cdn.jsdelivr.net/npm/docx-js@1.0.1/dist/docx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" defer></script>
+    <script src="app.js" type="module" defer></script>
+</head>
+<body>
+    <h1><u>File explorer</u></h1>
+    <h2>Creating a simple file explorer</h2>
+    <label for="cv">Chose CV to upload:</label>
+    <input 
+        type= "file" 
+        id="cv"
+        accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+    <br><br>
+    <label for="cover_letter">Chose example cover letter to upload:</label>
+    <input 
+        type= "file" 
+        id="cover_letter"
+        accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+    <br><br>
+    <label for="job-link">Copy and paste the job link here: </label>
+    <input type="text" id="job-link">
+    <br><br>
+    <button type="button" id="generate">Generate Cover Letter</button>
+    <br><br>
+    <textarea name="word_doc" id="my_word_doc"></textarea>
+    <br>
+    <button type="button" id="make-a-word-doc"">Generate Word Document</button>
+    <br><br>
+    <p id="api-response"></p>
+</body>
+</html>
