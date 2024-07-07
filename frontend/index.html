@@ -5,36 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Explorer</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js" defer></script>
-    <script src="https://cdn.jsdelivr.net/npm/docx-js@1.0.1/dist/docx.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" defer></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/docx-js@1.0.1/dist/docx.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js" defer></script> -->
     <script src="app.js" type="module" defer></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1><u>File Explorer</u></h1>
-    <h2>Creating a simple file explorer</h2>
-    <p>Add a description on what the user will entail</p>
-    <label for="cv">Chose CV to upload:</label>
-    <input 
-        type= "file" 
-        id="cv"
-        accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
-    <br><br>
-    <label for="cover_letter">Chose example cover letter to upload:</label>
-    <input 
-        type= "file" 
-        id="cover_letter"
-        accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
-    <br><br>
-    <label for="job-link">Copy and paste the job link here: </label>
-    <input type="text" id="job-link">
-    <br><br>
-    <button type="button" id="generate">Generate Cover Letter</button>
-    <br><br>
-    <textarea name="word_doc" id="my_word_doc"></textarea>
-    <br>
-    <button type="button" id="make-a-word-doc"">Generate Word Document</button>
-    <br><br>
-    <p id="api-response"></p>
+    <h1>Automated Cover Letter Generator</h1>
+    <p>Automate the generation of your cover letter with a few clicks. All that is required is your CV, cover letter and the job description.</p>
+
+    <div class="input-div">
+        <label for="cv">Chose CV to upload:</label>
+        <input 
+            type= "file" 
+            id="cv"
+            accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+    </div>
+
+    <div class="input-div">
+        <label for="cover_letter">Chose example cover letter to upload:</label>
+        <input 
+            type= "file" 
+            id="cover_letter"
+            accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+    </div>
+    
+    <div class="input-div">
+        <textarea name="job-link" id="job-description" placeholder="Copy and paste the job description here"></textarea>
+    </div>
+
+    <div id="generate">
+        <button type="button" id="generate">
+            Generate Cover Letter
+        </button>
+    </div>
+    <div class="input-div">
+        <textarea name="cover_letter" id="generated-cover-letter" placeholder="Your cover letter will appear here" disabled></textarea>
+    </div>
 </body>
 </html>

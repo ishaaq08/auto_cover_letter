@@ -1,55 +1,21 @@
-
-import docx from "docx";
-const {Document, Packer, Paragraph, TextRun} = docx;
-
 // Get elements
 let cv_upload = document.getElementById("cv");
 let cover_letter_upload = document.getElementById("cover_letter")
 let generate_cover_letter_btn = document.getElementById("generate")
-let job_link = document.getElementById("job-link")
-let api_response = document.getElementById("api-response")
-
-let text_area = document.getElementById("my_word_doc")
+let job_description_text_area = document.getElementById("job-description")
+let cover_letter_text_area = document.getElementById("generated-cover-letter")
 
 // Global variables
 let cv;
 let cover_letter;
 
-// Create word document
-function create_word_doc() {
-    // ONLY FOR DEV
-    let text = text_area.value
-
-    // Instance
-    const doc = new Document({
-        sections: [
-            {
-                properties: {},
-                children: [
-                    new Paragraph({
-                        children: [
-                            new TextRun(`${text}`),
-                        ],
-                    }),
-                ],
-            },
-        ],
-    });
-
-    // The following function saves our file from the browser
-    Packer.toBlob(doc).then((blob) => {
-        // saveAs from FileSaver will download the file
-        saveAs(blob, "cover-letter.docx");
-    });
-}
-
 async function fetchData() {
 
     // Variables to store the input data
-    let job_link_text = job_link.value;
+    let job_description = job_description_text_area.value;
 
     // Before making any requests ensure that the user has provided all 3: cv, cover letter and a job link 
-    if (!cv || !cover_letter || !job_link_text) {
+    if (!cv || !cover_letter || !job_description) {
         alert("A CV, cover letter and job letter must be provided!");
         return;
     }
@@ -63,7 +29,7 @@ async function fetchData() {
         body: JSON.stringify({
             cv: cv,
             cover_letter: cover_letter,
-            job_link: job_link_text
+            job_description: job_description
         }),
         headers: {
             "Content-type": "application/json; charset=UTF-8"
@@ -83,16 +49,14 @@ async function fetchData() {
         // If the response is okay store the results
         let data = await response.json();
 
-        // Print the output
-        api_response.textContent = "Check console for JD"
-
         // Store the response from OpenAI
         let gen_cover_letter = data["generated_cover_letter"]
 
-        // Create the word document
-        create_word_document(gen_cover_letter)
-
+        // Check to see the contents of the generated cover letter
         console.log(data["generated_cover_letter"]);
+
+        // Output the generated cover letter to the text area
+        cover_letter_text_area.value = gen_cover_letter
 
     } catch (error) {
         // Handle any errors that occur during fetch or JSON parsing 
@@ -100,59 +64,50 @@ async function fetchData() {
     }
 };
 
-// Event listener
-    // change > Detect when the user is selecting a file. Allows the script to start processing the file
-    // load > FileReader emits a load event once it has finished reading a file
+
+async function extractRawText({ arrayBuffer }) {
+    try {
+        let result = await mammoth.extractRawText({ arrayBuffer });
+        return result;
+    } catch (err) {
+        console.error("Error extracting from .docx file: ", err);
+        throw err;
+    }
+}
 
 cv_upload.addEventListener("change", () => {
     const fr = new FileReader();
 
-    // fr.readAsText(file.files[0]);
     fr.readAsArrayBuffer(cv_upload.files[0])
 
-    fr.addEventListener("load", () => {
-
-        const arrayBuffer = fr.result;
-        
-        extractRawText({arrayBuffer: arrayBuffer})
-            .then(result => {
-                // Extract the text from the docx
-                cv = result.value
-
-                // Also log the text to the console
-                console.log(cv);
-            })
-            .catch(err => {
-                console.error("Error extracting from .docx file: ", err);
-            });
-
+    fr.addEventListener("load", async () => {
+        try {
+            const arrayBuffer = fr.result;
+            let result = await extractRawText({ arrayBuffer });
+            cv = result.value;
+            console.log(cv);
+        } catch (err) {
+            console.error("Error extracting from .docx file: ", err);
+        }
     });
 });
 
 cover_letter_upload.addEventListener("change", () => {
     const fr = new FileReader();
 
-    // fr.readAsText(file.files[0]);
     fr.readAsArrayBuffer(cover_letter_upload.files[0])
 
-    fr.addEventListener("load", () => {
-
-        const arrayBuffer = fr.result;
-        
-        extractRawText({arrayBuffer: arrayBuffer})
-            .then(result => {
-                // Extract the text from the docx
-                cover_letter = result.value
-
-                // Also log the text to the console
-                console.log(cover_letter);
-            })
-            .catch(err => {
-                console.error("Error extracting from .docx file: ", err);
-            });
-
+    fr.addEventListener("load", async () => {
+        try {
+            const arrayBuffer = fr.result;
+            let result = await extractRawText({ arrayBuffer });
+            cover_letter = result.value;
+            console.log(cover_letter);
+        } catch (err) {
+            console.error("Error extracting from .docx file: ", err);
+        }
     });
 });
 
-document.getElementById("make-a-word-doc").addEventListener("click", create_word_doc);
-document.getElementById("generate").addEventListener("click", fetchData);
+generate_cover_letter_btn.addEventListener("click", fetchData)
+// document.getElementById("generate").addEventListener("click", fetchData);

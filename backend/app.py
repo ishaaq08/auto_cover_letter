@@ -22,10 +22,10 @@ def testpost():
     # Components of the body
     cv = body["cv"]
     cover_letter = body["cover_letter"]
-    job_link = body["job_link"]
+    job_description = body["job_description"]
 
     # Extracting the job description
-    job_description = extract_job_description(job_link)
+    # job_description = extract_job_description(job_link)
 
     # Using OpenAI to summarise the job description
     prompt = f"""
@@ -54,7 +54,7 @@ def testpost():
         return jsonify({"message": "Error receiving CV"}), 200
     elif not cover_letter:
         return jsonify({"message": "Error receiving cover letter"}), 200
-    elif not job_link:
+    elif not job_description:
         return jsonify({"message": "Error receiving job link"}), 200
     else:
         return jsonify({
