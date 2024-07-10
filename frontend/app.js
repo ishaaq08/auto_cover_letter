@@ -11,8 +11,12 @@ let cv;
 let cover_letter;
 
 async function fetchData() {
-    // Reveal the loader
-    loader.removeAttribute("hidden")
+    // Remove the green highlight
+    try {
+        cover_letter_text_area.classList.remove("border-success")
+    } catch (e) {
+        // Do nothing
+    }
 
     // Variables to store the input data
     let job_description = job_description_text_area.value;
@@ -22,6 +26,9 @@ async function fetchData() {
         alert("A CV, cover letter and job letter must be provided!");
         return;
     }
+
+    // Reveal the loader
+    loader.removeAttribute("hidden")
 
     // Define endpoint
     let endpoint = "http://127.0.0.1:5000/generate_cover_letter";
@@ -60,6 +67,9 @@ async function fetchData() {
 
         // Output the generated cover letter to the text area
         cover_letter_text_area.value = gen_cover_letter
+
+        // Change border of text area to green
+        cover_letter_text_area.setAttribute("class", "border-success")
 
         // Unlock the text area
         cover_letter_text_area.removeAttribute("readonly")

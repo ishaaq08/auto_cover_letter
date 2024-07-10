@@ -77,6 +77,10 @@ textarea {
     resize: none;
 }
 
+/* Cover Letter - Text Area */
+#generated-cover-letter {}
+
+
 p {
     margin-top: 20px;
     font-size: 1rem;
@@ -122,19 +126,3 @@ p {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
-
-/* .fade {
-    background-color: #DB1F48;
-    color: #fff;
-    transition: background-color 1s;
-  } */
-/*   
-  .fade:hover {
-    background-color: #004369;
-  }
-   */
-  /* .fade:focus,
-  .fade:active {
-    background-color: black;
-    transition: none;
-  } */
