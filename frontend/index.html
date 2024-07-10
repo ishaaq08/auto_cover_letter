@@ -15,7 +15,7 @@
 
     <div class="container">
 
-            <div class="row main border p-5 m-5">
+            <div class="row main border p-5 mt-5">
                 <!-- Left -->
                  <div class="col-4">
                     <h1>Automated Cover Letter Generator</h1>
@@ -32,6 +32,10 @@
                         type= "file" 
                         id="cover_letter"
                         accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                    <br>
+                    <div class="loader" id="my-loader" hidden></div>
+                    <button type="button" class="btn btn-success btn-lg mt-3" id="generate">Generate Cover Letter</button>
+
                  </div>
                  <div class="col-4">
                     <textarea class="form-control" name="job-link" id="job-description" placeholder="Copy and paste the job description here"></textarea>
@@ -45,7 +49,6 @@
 
             <div class="row generate-button mx-auto">
                 <div class="col-2 mx-auto">
-                    <button type="button" class="btn btn-success btn-lg" id="generate">Generate Cover Letter</button>
                 </div>
             </div>
  

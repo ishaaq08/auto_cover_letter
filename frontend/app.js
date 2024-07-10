@@ -4,12 +4,15 @@ let cover_letter_upload = document.getElementById("cover_letter")
 let generate_cover_letter_btn = document.getElementById("generate")
 let job_description_text_area = document.getElementById("job-description")
 let cover_letter_text_area = document.getElementById("generated-cover-letter")
+let loader = document.getElementById("my-loader")
 
 // Global variables
 let cv;
 let cover_letter;
 
 async function fetchData() {
+    // Reveal the loader
+    loader.removeAttribute("hidden")
 
     // Variables to store the input data
     let job_description = job_description_text_area.value;
@@ -57,6 +60,12 @@ async function fetchData() {
 
         // Output the generated cover letter to the text area
         cover_letter_text_area.value = gen_cover_letter
+
+        // Unlock the text area
+        cover_letter_text_area.removeAttribute("readonly")
+
+        // Hide the loader
+        loader.setAttribute("hidden", "")
 
     } catch (error) {
         // Handle any errors that occur during fetch or JSON parsing 
