@@ -5,10 +5,38 @@ let generate_cover_letter_btn = document.getElementById("generate")
 let job_description_text_area = document.getElementById("job-description")
 let cover_letter_text_area = document.getElementById("generated-cover-letter")
 let loader = document.getElementById("my-loader")
+let green_tick = document.getElementById("green-tick")
 
 // Global variables
 let cv;
 let cover_letter;
+
+// 
+// Function to type out text like a typewriter
+function typeOutText(element, text, delay = 5) {
+    element.value = ""; // Clear the text area
+    let index = 0;
+
+    function typeCharacter() {
+        if (index < text.length) {
+            element.value += text.charAt(index);
+            index++;
+            setTimeout(typeCharacter, delay);
+        } else {
+            // Change border of text area to green
+            element.setAttribute("class", "border-success")
+            // Unlock the text area
+            element.removeAttribute("readonly")
+            // Hide the loader
+            loader.setAttribute("hidden", "")
+            // Display the green tick
+            green_tick.removeAttribute("hidden", "")
+        }
+    }
+
+    typeCharacter();
+}
+// 
 
 async function fetchData() {
     // Remove the green highlight
@@ -68,14 +96,16 @@ async function fetchData() {
         // Output the generated cover letter to the text area
         cover_letter_text_area.value = gen_cover_letter
 
+        typeOutText(cover_letter_text_area, gen_cover_letter)
+
         // Change border of text area to green
-        cover_letter_text_area.setAttribute("class", "border-success")
+        // cover_letter_text_area.setAttribute("class", "border-success")
 
-        // Unlock the text area
-        cover_letter_text_area.removeAttribute("readonly")
+        // // Unlock the text area
+        // cover_letter_text_area.removeAttribute("readonly")
 
-        // Hide the loader
-        loader.setAttribute("hidden", "")
+        // // Hide the loader
+        // loader.setAttribute("hidden", "")
 
     } catch (error) {
         // Handle any errors that occur during fetch or JSON parsing 

@@ -80,6 +80,13 @@ textarea {
 /* Cover Letter - Text Area */
 #generated-cover-letter {}
 
+/* Green tick */
+#green-tick {
+    display: block;
+    width: 80px;
+    height: 80px;
+}
+
 
 p {
     margin-top: 20px;
