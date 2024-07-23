@@ -47,6 +47,8 @@ def testpost():
 
     Below you will find a previous cover letter:
     {cover_letter}
+
+    Limit the cover letter so that the number of words is between 250 and 400.
     """
     generated_cover_letter = get_completion(prompt=prompt)
 

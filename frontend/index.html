@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" defer>
     <title>File Explorer</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js" defer></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/docx-js@1.0.1/dist/docx.min.js"></script>
@@ -11,36 +12,49 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Automated Cover Letter Generator</h1>
-    <p>Automate the generation of your cover letter with a few clicks. All that is required is your CV, cover letter and the job description.</p>
 
-    <div class="input-div">
-        <label for="cv">Chose CV to upload:</label>
-        <input 
-            type= "file" 
-            id="cv"
-            accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+    <div class="container">
+
+            <div class="row main border p-5 mt-5">
+                <!-- Left -->
+                 <div class="col-4">
+                    <h1>Automated Cover Letter Generator</h1>
+                    <p>Automate the generation of your cover letter with a few clicks. All that is required is your CV, cover letter and the job description.</p>
+                    <label for="cv">Upload CV:</label>
+                    <input 
+                    class="form-control-file"
+                    type= "file" 
+                    id="cv"
+                    accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                    <label for="cover_letter">Upload cover letter:</label>
+                    <input 
+                        class="form-control-file"
+                        type= "file" 
+                        id="cover_letter"
+                        accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+                    <br>
+                    <div class="loader" id="my-loader" hidden></div>
+                    <img src="dark-green-tick.png" id="green-tick" hidden>
+                    <button type="button" class="btn btn-success btn-lg mt-3" id="generate">Generate Cover Letter</button>
+
+                 </div>
+                 <div class="col-4">
+                    <textarea class="form-control border-secondary" name="job-link" id="job-description" placeholder="Copy and paste the job description here"></textarea>
+
+                 </div>
+                 <div class="col-4">
+                    <textarea class="form-control special-box border-secondary" name="cover_letter" id="generated-cover-letter" placeholder="Your cover letter will appear here. This area is locked until a cover letter is generated." readonly></textarea>
+                 </div>
+            </div>
+            <!-- End of left -->
+
+            <div class="row generate-button mx-auto">
+                <div class="col-2 mx-auto">
+                </div>
+            </div>
+ 
+
     </div>
 
-    <div class="input-div">
-        <label for="cover_letter">Chose example cover letter to upload:</label>
-        <input 
-            type= "file" 
-            id="cover_letter"
-            accept=".doc,.docx,.xml,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
-    </div>
-    
-    <div class="input-div">
-        <textarea name="job-link" id="job-description" placeholder="Copy and paste the job description here"></textarea>
-    </div>
-
-    <div id="generate">
-        <button type="button" id="generate">
-            Generate Cover Letter
-        </button>
-    </div>
-    <div class="input-div">
-        <textarea name="cover_letter" id="generated-cover-letter" placeholder="Your cover letter will appear here" disabled></textarea>
-    </div>
 </body>
 </html>

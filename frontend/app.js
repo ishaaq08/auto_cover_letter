@@ -4,12 +4,47 @@ let cover_letter_upload = document.getElementById("cover_letter")
 let generate_cover_letter_btn = document.getElementById("generate")
 let job_description_text_area = document.getElementById("job-description")
 let cover_letter_text_area = document.getElementById("generated-cover-letter")
+let loader = document.getElementById("my-loader")
+let green_tick = document.getElementById("green-tick")
 
 // Global variables
 let cv;
 let cover_letter;
 
+// 
+// Function to type out text like a typewriter
+function typeOutText(element, text, delay = 5) {
+    element.value = ""; // Clear the text area
+    let index = 0;
+
+    function typeCharacter() {
+        if (index < text.length) {
+            element.value += text.charAt(index);
+            index++;
+            setTimeout(typeCharacter, delay);
+        } else {
+            // Change border of text area to green
+            element.setAttribute("class", "border-success")
+            // Unlock the text area
+            element.removeAttribute("readonly")
+            // Hide the loader
+            loader.setAttribute("hidden", "")
+            // Display the green tick
+            green_tick.removeAttribute("hidden", "")
+        }
+    }
+
+    typeCharacter();
+}
+// 
+
 async function fetchData() {
+    // Remove the green highlight
+    try {
+        cover_letter_text_area.classList.remove("border-success")
+    } catch (e) {
+        // Do nothing
+    }
 
     // Variables to store the input data
     let job_description = job_description_text_area.value;
@@ -19,6 +54,9 @@ async function fetchData() {
         alert("A CV, cover letter and job letter must be provided!");
         return;
     }
+
+    // Reveal the loader
+    loader.removeAttribute("hidden")
 
     // Define endpoint
     let endpoint = "http://127.0.0.1:5000/generate_cover_letter";
@@ -57,6 +95,17 @@ async function fetchData() {
 
         // Output the generated cover letter to the text area
         cover_letter_text_area.value = gen_cover_letter
+
+        typeOutText(cover_letter_text_area, gen_cover_letter)
+
+        // Change border of text area to green
+        // cover_letter_text_area.setAttribute("class", "border-success")
+
+        // // Unlock the text area
+        // cover_letter_text_area.removeAttribute("readonly")
+
+        // // Hide the loader
+        // loader.setAttribute("hidden", "")
 
     } catch (error) {
         // Handle any errors that occur during fetch or JSON parsing 
